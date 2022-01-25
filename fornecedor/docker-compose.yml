@@ -10,5 +10,5 @@ services:
       - ./scriptBancoDeDados:/docker-entrypoint-initdb.d
       - .docker/data1/db:/var/lib/mysql
     ports:
-      - 3308:3306
+      - 3309:3306
     restart: always
