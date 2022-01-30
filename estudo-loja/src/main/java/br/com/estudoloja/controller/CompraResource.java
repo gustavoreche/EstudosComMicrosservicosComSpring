@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.estudoloja.model.fornecedor.InfoFornecedorDTO;
 import br.com.estudoloja.model.loja.CompraDTO;
 import br.com.estudoloja.service.CompraService;
 
@@ -19,8 +20,8 @@ public class CompraResource {
 	}
 	
 	@PostMapping
-	public void realizaCompra(@RequestBody CompraDTO compra) {
-		this.compraService.realizaCompra(compra);
+	public InfoFornecedorDTO realizaCompra(@RequestBody CompraDTO compra) {
+		return this.compraService.realizaCompra(compra);
 	}
 
 }
