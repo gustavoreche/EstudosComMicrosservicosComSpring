@@ -20,7 +20,7 @@ public class InfoResource {
 	
 	@GetMapping("/{estado}")
 	public InfoFornecedor getInfoPorEstado(@PathVariable String estado) throws InterruptedException {
-		Thread.sleep(13000);
+		Thread.sleep(10000);
 		return this.infoService.getInfoPorEstado(estado);
 	}
 

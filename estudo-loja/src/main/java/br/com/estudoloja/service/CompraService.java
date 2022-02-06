@@ -1,5 +1,7 @@
 package br.com.estudoloja.service;
 
+import java.util.function.Supplier;
+
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,7 @@ import br.com.estudoloja.client.FornecedorClient;
 import br.com.estudoloja.model.fornecedor.InfoFornecedorDTO;
 import br.com.estudoloja.model.loja.CompraDTO;
 
-@Service
+@Service()
 public class CompraService {
 	
 	private FornecedorClient client;
@@ -19,11 +21,15 @@ public class CompraService {
 		this.client = client;
 		this.circuitBreaker = circuitBreakerFactory.create("recommended");
 	}
-
+	
 	public InfoFornecedorDTO realizaCompra(CompraDTO compra) {
-		return this.circuitBreaker.run(() -> this.client
-				.getInfoPorEstado(compra.getEndereco().getSiglaEstado()), 
+		return this.circuitBreaker.run(getInfoPorEstado(compra), 
 				fallback -> new InfoFornecedorDTO("Erro!! Estou no fallback"));
-	}	
+	}
 
+	private Supplier<InfoFornecedorDTO> getInfoPorEstado(CompraDTO compra) {
+		return () -> this.client
+				.getInfoPorEstado(compra.getEndereco().getSiglaEstado());
+	}	
+	
 }
